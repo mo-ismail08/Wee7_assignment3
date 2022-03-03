@@ -50,8 +50,8 @@ summary(data1logit)
 
 newdata1$Candidate.SourceP <- predict(data1logit, newdata = newdata1, type = "response")
 
-newdata2 <- with(entire_dataset, data.frame(Notice.period = rep(seq(from = 0, to = 120, length.out = 100),
-                                              3), Age = mean(Age), Rex.in.Yrs = mean(Rex.in.Yrs), Candidate.Source = factor(rep(1:3, each = 100))))
+newdata2 <- with(entire_dataset, data.frame(Rex.in.Yrs = rep(seq(from = 0, to = 26, length.out = 10),
+                                              3), Age = mean(Age), Notice.period = mean(Notice.period), Candidate.Source = factor(rep(1:3, each = 10))))
 
 newdata3 <- cbind(newdata2, predict(data1logit, newdata = newdata2, type = "link", se = TRUE))
 
@@ -63,5 +63,5 @@ newdata3 <- within(newdata3, {
 
 head(newdata3)
 
-ggplot(newdata3, aes(x = Notice.period, y = PredictedProb)) + geom_ribbon(aes(ymin = LL,ymax = UL, fill = Candidate.Source), alpha = 0.2) + geom_line(aes(colour = Candidate.Source),size = 1)
+ggplot(newdata3, aes(x = Rex.in.Yrs, y = PredictedProb)) + geom_ribbon(aes(ymin = LL,ymax = UL, fill = Candidate.Source), alpha = 0.2) + geom_line(aes(colour = Candidate.Source),size = 1)
 
